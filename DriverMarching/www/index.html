@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="theme-color" content="#0a0d12"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>DriverMarching</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Barlow:wght@400;600&display=swap">
+<style>
+:root{color-scheme:dark;--ink:#f2efe6;--mute:#9aa3ad;--line:rgba(255,255,255,.12);--glass:rgba(14,18,24,.78);--amber:#ffb400;--in:#46d68c;--out:#ff6b57;--sign:#0b6b43;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px);height:100%}
+body{margin:0;min-height:100%;color:var(--ink);font-family:Barlow,"Segoe UI",system-ui,sans-serif;background:#0a0d12;overflow-x:hidden}
+.bg{position:fixed;inset:0;z-index:-1;background:
+ radial-gradient(circle at 18% 22%,rgba(255,180,0,.55) 0 2px,transparent 3px),
+ radial-gradient(circle at 72% 14%,rgba(255,255,255,.6) 0 1.5px,transparent 3px),
+ radial-gradient(circle at 88% 30%,rgba(255,107,87,.5) 0 2px,transparent 3px),
+ radial-gradient(circle at 40% 10%,rgba(255,255,255,.4) 0 1px,transparent 2px),
+ radial-gradient(ellipse at 50% 100%,rgba(255,150,40,.35),transparent 55%),
+ linear-gradient(180deg,#05070c 0%,#101a2b 55%,#2a2030 100%)}
+.road{position:fixed;left:0;right:0;bottom:0;height:42vh;z-index:-1;background:linear-gradient(180deg,#1b1f27,#0b0d11);clip-path:polygon(44% 0,56% 0,100% 100%,0 100%)}
+.road::after{content:"";position:absolute;left:50%;top:0;bottom:0;width:6px;transform:translateX(-50%);background:repeating-linear-gradient(180deg,var(--amber) 0 22px,transparent 22px 48px);animation:drive 1.2s linear infinite}
+@keyframes drive{to{background-position:0 48px}}
+@media (prefers-reduced-motion:reduce){.road::after{animation:none}}
+main{max-width:560px;margin:0 auto;padding:18px 16px 60px}
+.sign{display:inline-block;background:var(--sign);border:3px solid #fff;border-radius:10px;padding:6px 16px;margin-bottom:16px;box-shadow:0 0 0 3px var(--sign),0 8px 24px rgba(0,0,0,.5)}
+.sign h1{margin:0;font:700 1.7rem/1 "Chakra Petch","Segoe UI",sans-serif;letter-spacing:.5px}
+.sign p{margin:2px 0 0;font-size:.78rem;opacity:.85}
+.tabs{display:flex;gap:0;margin-bottom:14px;border:2px solid var(--amber);border-radius:999px;overflow:hidden}
+.tabs button{flex:1;border:0;background:transparent;color:var(--amber);padding:10px;font:700 1.05rem "Chakra Petch","Segoe UI",sans-serif;letter-spacing:.5px;cursor:pointer}
+.tabs button.on{background:var(--amber);color:#14110a}
+.panel{background:var(--glass);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid var(--line);border-radius:18px 6px 18px 6px;padding:16px;margin-bottom:14px}
+.net small,.mini small{color:var(--mute);font-size:.82rem}
+.net b{display:block;font:700 2.3rem/1.1 "Chakra Petch","Segoe UI",sans-serif;text-shadow:0 0 18px currentColor}
+.bar{height:10px;border-radius:6px;background:var(--in);overflow:hidden;margin:10px 0 4px}
+.bar i{display:block;height:100%;background:var(--out)}
+.bl{display:flex;justify-content:space-between;color:var(--mute);font-size:.75rem}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.mini{padding:10px;border-radius:10px;background:rgba(255,255,255,.05)}
+.mini b{font:700 1.4rem "Chakra Petch","Segoe UI",sans-serif}
+.in{color:var(--in)}.out{color:var(--out)}
+label{display:block;font-size:.82rem;color:var(--mute);margin:10px 0 3px}
+input,select{width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;background:rgba(255,255,255,.07);color:var(--ink);font:inherit}
+select option{color:#111}
+input:focus,select:focus,button:focus-visible{outline:2px solid var(--amber);outline-offset:1px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.type{display:flex;gap:8px}
+.type button{flex:1;padding:11px;border-radius:10px;border:2px solid var(--line);background:transparent;color:var(--ink);font:700 1.05rem "Chakra Petch","Segoe UI",sans-serif;letter-spacing:.5px;cursor:pointer}
+.type button.on.i{border-color:var(--in);background:var(--in);color:#06150d}
+.type button.on.o{border-color:var(--out);background:var(--out);color:#1c0803}
+.save{width:100%;margin-top:14px;padding:14px;border:0;border-radius:10px;background:var(--amber);color:#14110a;font:700 1.25rem "Chakra Petch","Segoe UI",sans-serif;letter-spacing:1px;cursor:pointer;box-shadow:0 6px 20px rgba(255,180,0,.3)}
+.item{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid var(--line)}
+.item:last-child{border:0}
+.item small{color:var(--mute)}
+.item .x{border:0;background:transparent;color:var(--mute);font-size:1.1rem;cursor:pointer;padding:6px}
+.day{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.day:last-child{border:0}
+.day b{font:700 1.25rem "Chakra Petch","Segoe UI",sans-serif}
+.empty{color:var(--mute);text-align:center;padding:12px 0}
+.nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;gap:8px}
+.nav button{border:1px solid var(--line);background:var(--glass);color:var(--ink);border-radius:10px;padding:8px 16px;font-size:1.1rem;cursor:pointer}
+.nav span{font:700 1.15rem "Chakra Petch","Segoe UI",sans-serif;text-align:center;letter-spacing:.5px}
+.alert{border-left:4px solid var(--amber);background:rgba(255,180,0,.13);padding:11px 13px;border-radius:4px 12px 12px 4px;margin-bottom:14px;font-size:.95rem}
+.alert[hidden]{display:none}
+.tg{display:block;font-size:.8rem;color:var(--mute)}
+.tg.ok{color:var(--in)}
+.tg.no{color:var(--amber)}
+.pg{height:10px;border-radius:6px;background:rgba(255,255,255,.1);overflow:hidden;margin:8px 0}
+.pg i{display:block;height:100%;background:var(--amber);border-radius:6px}
+.pg.done i{background:var(--in)}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,30px);background:var(--amber);color:#14110a;font:700 1rem "Chakra Petch",sans-serif;padding:11px 20px;border-radius:999px;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:10}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+<div class="bg"></div><div class="road"></div>
+<main>
+<div class="sign"><h1>DriverMarching</h1><p>Catatan uang harian &amp; mingguan</p></div>
+<div class="tabs"><button id="t1" class="on">HARIAN</button><button id="t2">MINGGUAN</button></div>
+
+<section id="v1">
+<div class="nav"><button id="pd" aria-label="Hari sebelumnya">‹</button><span id="dl"></span><button id="nd" aria-label="Hari berikutnya">›</button></div>
+<div class="alert" id="ab" role="status" hidden></div>
+<div class="panel" id="ds"></div>
+<div class="panel" id="tg"></div>
+<div class="panel">
+<div class="type"><button class="i on" id="bi">PEMASUKAN</button><button class="o" id="bo">PENGELUARAN</button></div>
+<div class="row2">
+<div><label for="amt">Jumlah (Rp)</label><input id="amt" type="number" inputmode="numeric" min="0" placeholder="50000"></div>
+<div><label for="cat">Kategori</label><select id="cat"></select></div>
+</div>
+<label for="note">Catatan (boleh kosong)</label><input id="note" placeholder="mis. antar penumpang ke bandara">
+<button class="save" id="sv">SIMPAN</button>
+</div>
+<div class="panel" id="dlist"></div>
+</section>
+
+<section id="v2" hidden>
+<div class="nav"><button id="pw" aria-label="Minggu sebelumnya">‹</button><span id="wl"></span><button id="nw" aria-label="Minggu berikutnya">›</button></div>
+<div class="panel" id="ws"></div>
+<div class="panel" id="wlist"></div>
+</section>
+</main>
+<script>
+var TARGET=50000;
+var CAT={i:["Order / penumpang","Tip","Bonus","Lainnya"],o:["BBM","Makan","Parkir / Tol","Servis","Cicilan / Setoran","Lainnya"]};
+var data=[],type="i",day=new Date(),wk=new Date();
+try{data=JSON.parse(localStorage.getItem("drivermarching-data")||localStorage.getItem("driver-data")||"[]")}catch(e){data=[]}
+function save(){try{localStorage.setItem("drivermarching-data",JSON.stringify(data))}catch(e){}}
+function key(d){var m=d.getMonth()+1,x=d.getDate();return d.getFullYear()+"-"+(m<10?"0":"")+m+"-"+(x<10?"0":"")+x}
+function rp(n){return "Rp "+Math.round(n).toLocaleString("id-ID")}
+function monday(d){var x=new Date(d);var w=(x.getDay()+6)%7;x.setDate(x.getDate()-w);x.setHours(0,0,0,0);return x}
+function fmt(d,o){return d.toLocaleDateString("id-ID",o)}
+function sums(list){var a=0,b=0;list.forEach(function(e){e.t==="i"?a+=e.a:b+=e.a});return{a:a,b:b}}
+function sumHtml(s){var n=s.a-s.b,p=s.a>0?Math.min(100,Math.round(s.b/s.a*100)):0;
+return '<div class="net"><small>Untung bersih</small><b class="'+(n>=0?"in":"out")+'">'+(n<0?"−":"")+rp(Math.abs(n))+'</b></div><div class="bar"><i style="width:'+p+'%"></i></div><div class="bl"><span>Sisa untung</span><span>Habis buat pengeluaran: '+p+'%</span></div><div class="two"><div class="mini"><small>Pemasukan</small><br><b class="in">'+rp(s.a)+'</b></div><div class="mini"><small>Pengeluaran</small><br><b class="out">'+rp(s.b)+'</b></div></div>'}
+function setCats(){document.getElementById("cat").innerHTML=CAT[type].map(function(c){return "<option>"+c+"</option>"}).join("")}
+function render(){
+var k=key(day);
+document.getElementById("dl").textContent=fmt(day,{weekday:"long",day:"numeric",month:"long",year:"numeric"});
+var list=data.filter(function(e){return e.d===k});
+document.getElementById("ds").innerHTML=sumHtml(sums(list));
+var dl=document.getElementById("dlist");
+dl.innerHTML=list.length?"":'<div class="empty">Belum ada catatan hari ini. Isi jumlah di atas lalu tekan Simpan.</div>';
+list.slice().reverse().forEach(function(e){
+var r=document.createElement("div");r.className="item";
+r.innerHTML='<div><b>'+e.c+'</b><br><small></small></div><div><b class="'+(e.t==="i"?"in":"out")+'">'+(e.t==="i"?"+":"−")+rp(e.a)+'</b> <button class="x" aria-label="Hapus">✕</button></div>';
+r.querySelector("small").textContent=e.n||"";
+r.querySelector(".x").onclick=function(){if(confirm("Hapus catatan ini?")){data=data.filter(function(z){return z.id!==e.id});save();render()}};
+dl.appendChild(r)});
+var ab=document.getElementById("ab"),msg="";
+if(k===key(new Date())){var s0=sums(list),ex=list.some(function(e){return e.t==="o"});
+if(!list.length)msg=(day.getDay()%6===0)?"":"Belum ada catatan hari ini. Catat pemasukan pertamamu ya.";
+else if(s0.b>s0.a)msg="Pengeluaran hari ini lebih besar dari pemasukan. Cek lagi ya.";
+else if(new Date().getHours()>=18&&!ex)msg="Sudah sore. Pengeluaran hari ini (BBM, makan, parkir) sudah dicatat?";}
+var tg=document.getElementById('tg'),inc=sums(list).a;
+if(day.getDay()%6===0){tg.innerHTML='<b>Hari libur 🌴</b><br><small class="tg">Sabtu dan Minggu tidak ada target. Istirahat dulu.</small>'}
+else{var dn=inc>=TARGET,pc=Math.min(100,Math.round(inc/TARGET*100));tg.innerHTML='<div class="bl"><span>Target harian</span><span>'+rp(inc)+' / '+rp(TARGET)+'</span></div><div class="pg'+(dn?' done':'')+'"><i style="width:'+pc+'%"></i></div><small class="tg '+(dn?'ok':'no')+'">'+(dn?'Target tercapai ✓'+(inc>TARGET?' (lebih '+rp(inc-TARGET)+')':''):'Kurang '+rp(TARGET-inc)+' lagi')+'</small>'}
+ab.textContent=msg;ab.hidden=!msg;
+var m=monday(wk),end=new Date(m);end.setDate(end.getDate()+6);
+document.getElementById("wl").textContent=fmt(m,{day:"numeric",month:"short"})+" – "+fmt(end,{day:"numeric",month:"short",year:"numeric"});
+var days=[],all=[];
+for(var i=0;i<7;i++){var d=new Date(m);d.setDate(d.getDate()+i);var l=data.filter(function(e){return e.d===key(d)});all=all.concat(l);days.push({d:d,s:sums(l)})}
+document.getElementById("ws").innerHTML=sumHtml(sums(all))+'<div class="bl" style="margin-top:12px"><span>Target 50 rb tercapai</span><span>'+days.filter(function(x){return x.d.getDay()%6!==0&&x.s.a>=TARGET}).length+' dari 5 hari kerja</span></div>';
+document.getElementById("wlist").innerHTML=days.map(function(x){var n=x.s.a-x.s.b;return '<div class="day"><span>'+fmt(x.d,{weekday:"long",day:"numeric"})+(x.d.getDay()%6===0?'<small class="tg">libur</small>':(x.d>new Date()?'':(x.s.a>=TARGET?'<small class="tg ok">target tercapai ✓</small>':'<small class="tg no">kurang '+rp(TARGET-x.s.a)+'</small>')))+'</span><b class="'+(n>=0?"in":"out")+'">'+(n<0?"−":"")+rp(Math.abs(n))+'</b></div>'}).join("");
+}
+function toast(t){var el=document.getElementById("toast");if(!el){el=document.createElement("div");el.id="toast";el.className="toast";el.setAttribute("role","status");document.body.appendChild(el)}el.textContent=t;el.classList.add("show");clearTimeout(window._tt);window._tt=setTimeout(function(){el.classList.remove("show")},2200)}
+function tab(n){document.getElementById("v1").hidden=n!==1;document.getElementById("v2").hidden=n!==2;document.getElementById("t1").className=n===1?"on":"";document.getElementById("t2").className=n===2?"on":""}
+function setType(t){type=t;document.getElementById("bi").className="i"+(t==="i"?" on":"");document.getElementById("bo").className="o"+(t==="o"?" on":"");setCats()}
+document.getElementById("t1").onclick=function(){tab(1)};
+document.getElementById("t2").onclick=function(){tab(2)};
+document.getElementById("bi").onclick=function(){setType("i")};
+document.getElementById("bo").onclick=function(){setType("o")};
+document.getElementById("pd").onclick=function(){day.setDate(day.getDate()-1);render()};
+document.getElementById("nd").onclick=function(){day.setDate(day.getDate()+1);render()};
+document.getElementById("pw").onclick=function(){wk.setDate(wk.getDate()-7);render()};
+document.getElementById("nw").onclick=function(){wk.setDate(wk.getDate()+7);render()};
+document.getElementById("sv").onclick=function(){
+var a=parseInt(document.getElementById("amt").value,10);
+if(!a||a<=0){alert("Isi jumlah uang dulu.");return}
+data.push({id:Date.now(),d:key(day),t:type,a:a,c:document.getElementById("cat").value,n:document.getElementById("note").value.trim()});
+save();document.getElementById("amt").value="";document.getElementById("note").value="";render();toast(type==="i"?"Pemasukan tersimpan ✓":"Pengeluaran tersimpan ✓")};
+setType("i");render();
+</script>
+</body>
+</html>
