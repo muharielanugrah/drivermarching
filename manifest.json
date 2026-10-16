@@ -1,11 +1,12 @@
 {
+  "id": "./index.html",
   "name": "DriverMarching Pro",
-  "short_name": "DriverMarching",
-  "description": "Aplikasi Catatan Keuangan dan Perawatan Motor Cerdas untuk Seluruh Komunitas Driver Ojol Indonesia",
+  "short_name": "DriverPro",
+  "description": "Aplikasi catatan keuangan harian, perawatan motor, dan asisten rute kurir untuk ojol & mahasiswa.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
-  "orientation": "portrait-primary",
+  "orientation": "portrait",
   "background_color": "#0B1318",
   "theme_color": "#10B981",
   "lang": "id-ID",
@@ -29,14 +30,14 @@
       "name": "Tambah Pemasukan",
       "short_name": "Pemasukan",
       "description": "Input cepat pemasukan hari ini",
-      "url": "./catatan-driver.html",
+      "url": "./index.html",
       "icons": [{ "src": "./icon-192.png", "sizes": "192x192" }]
     },
     {
       "name": "Laporan Bulanan",
       "short_name": "Laporan",
       "description": "Rekap dan grafik pendapatan bulanan",
-      "url": "./catatan-driver.html",
+      "url": "./index.html",
       "icons": [{ "src": "./icon-192.png", "sizes": "192x192" }]
     }
   ],

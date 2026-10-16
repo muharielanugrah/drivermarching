@@ -1,5 +1,5 @@
-/* DriverMarching Pro Service Worker — v11 (Splash + Staggered Reveal + Bug Fixes) */
-const CACHE_NAME = 'drivermarching-pro-v11';
+/* DriverMarching Pro Service Worker — v12 (Zero-Floor Balance + Hybrid Voice AI) */
+const CACHE_NAME = 'drivermarching-pro-v12';
 
 const STATIC_ASSETS = [
   './',
@@ -79,7 +79,7 @@ self.addEventListener('fetch', (event) => {
       }).catch(() => {
         // If navigation request fails offline, fallback to main html
         if (req.mode === 'navigate' || (req.headers.get('accept') && req.headers.get('accept').includes('text/html'))) {
-          return caches.match('./catatan-driver.html');
+          return caches.match('./index.html');
         }
       });
     })
